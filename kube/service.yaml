@@ -1,0 +1,12 @@
+#in kubernetes service plays the role of load balancer and service discovery that exposes the services to outside wold
+apiVersion: v1
+kind: Service
+metadata:
+  name: boost-webapp-srv
+spec:
+  selector:
+    app: boost-webapp
+  ports:
+    - port: 9000
+      targetPort: 9000
+  type: NodePort

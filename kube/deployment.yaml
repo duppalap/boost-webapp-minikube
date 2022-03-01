@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: boost-webapp-dpl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: boost-webapp
+  template:
+    metadata:
+      labels:
+        app: boost-webapp
+    spec:
+      containers:
+        - name: boost-webapp
+          image: duppalapati3/boost-webapp-img:latest # Image that will be used to container in the clutser
+          imagePullPolicy: Always # If the kubelet has a container image with that exact digest cached locally, the kubelet uses its cached image; otherwise, the kubelet pulls the image with the resolved digest, and uses that image to launch the container.
