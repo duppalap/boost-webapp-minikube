@@ -1,6 +1,6 @@
-import { boostAppConfig } from "../config";
-import { ReportInterface, ReportPayloadInterface } from "../@types/reports";
-import { WrapperService } from "./wrapper";
+import { boostAppConfig } from '../config';
+import { ReportInterface, ReportPayloadInterface } from '../@types/reports';
+import { WrapperService } from './wrapper';
 
 export class ReportService {
   public apiService: WrapperService = new WrapperService();
@@ -13,33 +13,33 @@ export class ReportService {
   ) {
     const filteredBoostGroups = boostGroupIds.filter(Number);
     let apiParam = {
-      method: "GET",
+      method: 'GET',
       url: `/reports`,
       params: {
         currentRow: currentRow,
         limit: limit,
         owner: ownerId,
         ...(filteredBoostGroups.length > 0 && {
-          boostGroupIds: filteredBoostGroups.join(","),
-        }),
-      },
+          boostGroupIds: filteredBoostGroups.join(',')
+        })
+      }
     };
     return this.apiService.httpCall(apiParam);
   }
 
   public getReport(reportId: number = 0) {
     let apiParam = {
-      method: "GET",
-      url: `/reports/${reportId}`,
+      method: 'GET',
+      url: `/reports/${reportId}`
     };
     return this.apiService.httpCall(apiParam);
   }
 
   public deleteReport(reportId: number | null) {
     let apiParam = {
-      method: "DELETE",
+      method: 'DELETE',
       url: `/reports`,
-      params: { report: reportId },
+      params: { report: reportId }
     };
     return this.apiService.httpCall(apiParam);
   }
@@ -48,14 +48,14 @@ export class ReportService {
     let apiParam = {
       method: method,
       url: `/reports`,
-      body: payload,
+      body: payload
     };
     return this.apiService.httpCall(apiParam);
   }
 
   public getSplunkReport(report: ReportInterface) {
     let apiParam = {
-      method: "POST",
+      method: 'POST',
       url: `/splunk/reports`,
       body: {
         ownerId: report.ownerId,
@@ -63,8 +63,8 @@ export class ReportService {
         startTime: report.startTime,
         endTime: report.endTime,
         reportType: report.reportType,
-        env: boostAppConfig.env ? boostAppConfig.env : "development",
-      },
+        env: boostAppConfig.env ? boostAppConfig.env : 'development'
+      }
     };
     return this.apiService.httpCall(apiParam);
   }

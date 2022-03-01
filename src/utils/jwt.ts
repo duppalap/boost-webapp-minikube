@@ -1,9 +1,9 @@
 /* eslint-disable no-useless-concat */
-import jwtDecode from "jwt-decode";
-import { verify, sign } from "jsonwebtoken";
+import jwtDecode from 'jwt-decode';
+import { verify, sign } from 'jsonwebtoken';
 //
-import axios from "./axios";
-import { LoginForm } from "./sigin";
+import axios from './axios';
+import { LoginForm } from './sigin';
 
 // ----------------------------------------------------------------------
 
@@ -27,7 +27,7 @@ const handleTokenExpired = (exp: any) => {
   const timeLeft = exp * 1000 - currentTime;
   console.log(timeLeft);
   expiredTimer = window.setTimeout(() => {
-    console.log("expired");
+    console.log('expired');
     // You can do what ever you want here, like show a notification
   }, timeLeft);
 };
@@ -54,17 +54,14 @@ const setSession = (accessToken: string | null) => {
 
 function setCookie(tokenData: string) {
   let cookieString: string =
-    encodeURIComponent("boostAmpReactToken") +
-    "=" +
-    encodeURIComponent(tokenData) +
-    ";";
+    encodeURIComponent('boostAmpReactToken') + '=' + encodeURIComponent(tokenData) + ';';
   // eslint-disable-next-line no-useless-concat
-  cookieString += "samesite=" + "Strict" + ";";
+  cookieString += 'samesite=' + 'Strict' + ';';
   document.cookie = cookieString;
 }
 
 function getTokenCookie() {
-  const name = encodeURIComponent("boostAmpReactToken");
+  const name = encodeURIComponent('boostAmpReactToken');
   let result;
   const regExp: RegExp = getCookieRegExp(name);
   result = regExp.exec(document.cookie);
@@ -80,15 +77,9 @@ function getTokenCookie() {
  */
 function getCookieRegExp(name: string): RegExp {
   // eslint-disable-next-line no-useless-escape
-  const escapedName: string = name.replace(
-    /([\[\]\{\}\(\)\|\=\;\+\?\,\.\*\^\$])/gi,
-    "\\$1"
-  );
+  const escapedName: string = name.replace(/([\[\]\{\}\(\)\|\=\;\+\?\,\.\*\^\$])/gi, '\\$1');
 
-  return new RegExp(
-    "(?:^" + escapedName + "|;\\s*" + escapedName + ")=(.*?)(?:;|$)",
-    "g"
-  );
+  return new RegExp('(?:^' + escapedName + '|;\\s*' + escapedName + ')=(.*?)(?:;|$)', 'g');
 }
 
 /**
@@ -107,8 +98,7 @@ function validateToken(): boolean {
  * Delete the cookie when we logout from the application.
  */
 function deleteCookie() {
-  document.cookie =
-    "boostAmpReactToken" + "=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+  document.cookie = 'boostAmpReactToken' + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
 
 export {
@@ -120,5 +110,5 @@ export {
   setCookie,
   validateToken,
   getTokenCookie,
-  getCookieRegExp,
+  getCookieRegExp
 };

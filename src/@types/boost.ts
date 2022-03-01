@@ -1,6 +1,6 @@
-import { AccordionProps } from "@mui/material";
-import dayjs from "dayjs";
-import customParseFormat from "dayjs/plugin/customParseFormat";
+import { AccordionProps } from '@mui/material';
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 export interface BoostDeviceInterfaceSplunk {
   reportInfo?: any; // Any from the server.
   chargeEnergy?: any;
@@ -126,10 +126,10 @@ export interface IRespreports {
 }
 
 export enum ConnectorStatus {
-  Available = "AVAILABLE",
-  Unavailable = "UNAVAILABLE",
-  Offline = "OFFLINE",
-  Charging = "CHARGING",
+  Available = 'AVAILABLE',
+  Unavailable = 'UNAVAILABLE',
+  Offline = 'OFFLINE',
+  Charging = 'CHARGING'
 }
 
 export interface IBoost {
@@ -216,16 +216,16 @@ export interface ILanguages {
   updatedAt: string;
 }
 
-export type INetwork = Pick<IBoostGroupNetwork, "networkId" | "networkName">;
+export type INetwork = Pick<IBoostGroupNetwork, 'networkId' | 'networkName'>;
 
 export enum IBoostWeekDays {
-  monday = "Monday",
-  tuesday = "Tuesday",
-  wednesday = "Wednesday",
-  thursday = "Thursday",
-  friday = "Friday",
-  saturday = "Saturday",
-  sunday = "Sunday",
+  monday = 'Monday',
+  tuesday = 'Tuesday',
+  wednesday = 'Wednesday',
+  thursday = 'Thursday',
+  friday = 'Friday',
+  saturday = 'Saturday',
+  sunday = 'Sunday'
 }
 
 export interface IHoursOfOperation {
@@ -351,47 +351,47 @@ export interface IBoostAccordianProps extends AccordionProps {
   icon?: JSX.Element;
 }
 
-const selectedRangeChosen: string = "MM/DD/YYYY";
+const selectedRangeChosen: string = 'MM/DD/YYYY';
 
-const splunkDateFormat: string = "YYYY-MM-DDTHH:mm:ss";
+const splunkDateFormat: string = 'YYYY-MM-DDTHH:mm:ss';
 
 const splunkRangeFormats: { [key: string]: any } = {
   Yesterday: {
-    startTime: "-1d@d",
-    endTime: "@d",
-    startTimeEquivalent: dayjs().subtract(1, "days"),
-    endTimeEquivalent: dayjs().subtract(1, "days"),
+    startTime: '-1d@d',
+    endTime: '@d',
+    startTimeEquivalent: dayjs().subtract(1, 'days'),
+    endTimeEquivalent: dayjs().subtract(1, 'days')
   },
-  "Last 7 Days": {
-    startTime: "-7d@d",
-    endTime: "@d",
-    startTimeEquivalent: dayjs().subtract(6, "days"),
-    endTimeEquivalent: dayjs(),
+  'Last 7 Days': {
+    startTime: '-7d@d',
+    endTime: '@d',
+    startTimeEquivalent: dayjs().subtract(6, 'days'),
+    endTimeEquivalent: dayjs()
   },
-  "Last 30 Days": {
-    startTime: "-30d@d",
-    endTime: "@d",
-    startTimeEquivalent: dayjs().subtract(29, "days"),
-    endTimeEquivalent: dayjs(),
+  'Last 30 Days': {
+    startTime: '-30d@d',
+    endTime: '@d',
+    startTimeEquivalent: dayjs().subtract(29, 'days'),
+    endTimeEquivalent: dayjs()
   },
-  "This Month": {
-    startTime: "@mon",
-    endTime: "@d",
-    startTimeEquivalent: dayjs().startOf("month"),
-    endTimeEquivalent: dayjs().endOf("month"),
+  'This Month': {
+    startTime: '@mon',
+    endTime: '@d',
+    startTimeEquivalent: dayjs().startOf('month'),
+    endTimeEquivalent: dayjs().endOf('month')
   },
-  "Last Month": {
-    startTime: "-1mon@mon",
-    endTime: "@mon",
-    startTimeEquivalent: dayjs().subtract(1, "month").startOf("month"),
-    endTimeEquivalent: dayjs().subtract(1, "month").endOf("month"),
+  'Last Month': {
+    startTime: '-1mon@mon',
+    endTime: '@mon',
+    startTimeEquivalent: dayjs().subtract(1, 'month').startOf('month'),
+    endTimeEquivalent: dayjs().subtract(1, 'month').endOf('month')
   },
-  "Last 3 Month": {
-    startTime: "-3mon@mon",
-    endTime: "@mon",
-    startTimeEquivalent: dayjs().subtract(3, "month").startOf("month"),
-    endTimeEquivalent: dayjs().subtract(1, "month").endOf("month"),
-  },
+  'Last 3 Month': {
+    startTime: '-3mon@mon',
+    endTime: '@mon',
+    startTimeEquivalent: dayjs().subtract(3, 'month').startOf('month'),
+    endTimeEquivalent: dayjs().subtract(1, 'month').endOf('month')
+  }
 };
 
 export interface IDateRangeFormat {
@@ -415,7 +415,7 @@ export const getSelectedRangeFromSplunkFormats = (
         selectedRangeChosen
       )}`,
       startDate: startDate,
-      endDate: endDate,
+      endDate: endDate
     };
   } else {
     for (const property in splunkRangeFormats) {
@@ -426,12 +426,12 @@ export const getSelectedRangeFromSplunkFormats = (
         return {
           chosenLabel: property,
           startDate: splunkRangeFormats[property].startTimeEquivalent,
-          endDate: splunkRangeFormats[property].endTimeEquivalent,
+          endDate: splunkRangeFormats[property].endTimeEquivalent
         };
       }
     }
   }
   return {
-    chosenLabel: "",
+    chosenLabel: ''
   };
 };

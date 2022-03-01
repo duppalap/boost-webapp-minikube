@@ -1,5 +1,5 @@
-import axios from "axios";
-import { AuthService } from "_apis_/auth";
+import axios from 'axios';
+import { AuthService } from '_apis_/auth';
 
 export default function jwtInterceptor() {
   axios.interceptors.request.use((request: any) => {
