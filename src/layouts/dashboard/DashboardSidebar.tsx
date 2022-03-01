@@ -1,50 +1,42 @@
-import { useEffect } from "react";
-import { Link as RouterLink, useLocation } from "react-router-dom";
+import { useEffect } from 'react';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
 // material
-import { alpha, styled } from "@mui/material/styles";
-import {
-  Box,
-  Link,
-  Stack,
-  Button,
-  Drawer,
-  Typography,
-  IconButton,
-} from "@mui/material";
+import { alpha, styled } from '@mui/material/styles';
+import { Box, Link, Stack, Button, Drawer, Typography, IconButton } from '@mui/material';
 // hooks
-import useAuth from "../../hooks/useAuth";
-import useCollapseDrawer from "../../hooks/useCollapseDrawer";
+import useAuth from '../../hooks/useAuth';
+import useCollapseDrawer from '../../hooks/useCollapseDrawer';
 // routes
-import { PATH_DASHBOARD, PATH_DOCS } from "../../routes/paths";
+import { PATH_DASHBOARD, PATH_DOCS } from '../../routes/paths';
 // components
-import Logo from "../../components/Logo";
-import MyAvatar from "../../components/MyAvatar";
-import Scrollbar from "../../components/Scrollbar";
-import NavSection from "../../components/NavSection";
-import { MHidden } from "../../components/@material-extend";
-import sidebarConfig from "./SidebarConfig";
-import palette from "../../theme/palette";
-import { Icon } from "@iconify/react";
+import Logo from '../../components/Logo';
+import MyAvatar from '../../components/MyAvatar';
+import Scrollbar from '../../components/Scrollbar';
+import NavSection from '../../components/NavSection';
+import { MHidden } from '../../components/@material-extend';
+import sidebarConfig from './SidebarConfig';
+import palette from '../../theme/palette';
+import { Icon } from '@iconify/react';
 // ----------------------------------------------------------------------
 
 const DRAWER_WIDTH = 280;
 const COLLAPSE_WIDTH = 102;
 
-const RootStyle = styled("div")(({ theme }) => ({
-  [theme.breakpoints.up("lg")]: {
+const RootStyle = styled('div')(({ theme }) => ({
+  [theme.breakpoints.up('lg')]: {
     flexShrink: 0,
-    transition: theme.transitions.create("width", {
-      duration: theme.transitions.duration.complex,
-    }),
-  },
+    transition: theme.transitions.create('width', {
+      duration: theme.transitions.duration.complex
+    })
+  }
 }));
 
-const AccountStyle = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
+const AccountStyle = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
   padding: theme.spacing(2, 2.5),
   borderRadius: theme.shape.borderRadiusSm,
-  backgroundColor: theme.palette.grey[500_12],
+  backgroundColor: theme.palette.grey[500_12]
 }));
 
 // ----------------------------------------------------------------------
@@ -60,16 +52,16 @@ function IconCollapse({ onToggleCollapse, collapseClick }: IconCollapseProps) {
       onClick={onToggleCollapse}
       color="inherit"
       sx={{
-        display: "flex",
-        cursor: "pointer",
-        alignItems: "center",
+        display: 'flex',
+        cursor: 'pointer',
+        alignItems: 'center',
         color: palette.dark.text.primary,
-        justifyContent: "center",
+        justifyContent: 'center',
         ...(collapseClick
-          ? { transform: "rotate(180deg)" }
+          ? { transform: 'rotate(180deg)' }
           : {
-              transform: "rotate(0deg)",
-            }),
+              transform: 'rotate(0deg)'
+            })
       }}
       aria-label="Open drawer"
     >
@@ -83,39 +75,29 @@ type DashboardSidebarProps = {
   onCloseSidebar: VoidFunction;
 };
 
-export default function DashboardSidebar({
-  isOpenSidebar,
-  onCloseSidebar,
-}: DashboardSidebarProps) {
+export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: DashboardSidebarProps) {
   const { pathname } = useLocation();
   const { user } = useAuth();
 
-  const {
-    isCollapse,
-    collapseClick,
-    collapseHover,
-    onToggleCollapse,
-    onHoverEnter,
-    onHoverLeave,
-  } = useCollapseDrawer();
+  const { isCollapse, collapseClick, collapseHover, onToggleCollapse, onHoverEnter, onHoverLeave } =
+    useCollapseDrawer();
 
   useEffect(() => {
     if (isOpenSidebar) {
       onCloseSidebar();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   const renderContent = (
     <Scrollbar
       sx={{
         height: 1,
-        bgcolor: "grey.900",
-        "& .simplebar-content": {
+        bgcolor: 'grey.900',
+        '& .simplebar-content': {
           height: 1,
-          display: "flex",
-          flexDirection: "column",
-        },
+          display: 'flex',
+          flexDirection: 'column'
+        }
       }}
     >
       <Stack
@@ -125,50 +107,33 @@ export default function DashboardSidebar({
           pt: 3,
           pb: 2,
           ...(isCollapse && {
-            alignItems: "center",
-          }),
+            alignItems: 'center'
+          })
         }}
       >
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-        >
-          <Box component={RouterLink} to="/" sx={{ display: "inline-flex" }}>
+        <Stack direction="row" alignItems="center" justifyContent="space-between">
+          <Box component={RouterLink} to="/" sx={{ display: 'inline-flex' }}>
             {isCollapse ? <Logo onlyLogo={true} /> : <Logo />}
           </Box>
 
           <MHidden width="lgDown">
             {!isCollapse && (
-              <IconCollapse
-                onToggleCollapse={onToggleCollapse}
-                collapseClick={collapseClick}
-              />
+              <IconCollapse onToggleCollapse={onToggleCollapse} collapseClick={collapseClick} />
             )}
           </MHidden>
         </Stack>
 
         {isCollapse ? (
-          <MyAvatar sx={{ mx: "auto", mb: 2 }} />
+          <MyAvatar sx={{ mx: 'auto', mb: 2 }} />
         ) : (
-          <Link
-            underline="none"
-            component={RouterLink}
-            to={PATH_DASHBOARD.user.account}
-          >
+          <Link underline="none" component={RouterLink} to={PATH_DASHBOARD.user.account}>
             <AccountStyle>
               <MyAvatar />
               <Box sx={{ ml: 2 }}>
-                <Typography
-                  variant="subtitle2"
-                  sx={{ color: palette.dark.text.primary }}
-                >
+                <Typography variant="subtitle2" sx={{ color: palette.dark.text.primary }}>
                   {user?.firstName} {user?.lastName}
                 </Typography>
-                <Typography
-                  variant="body2"
-                  sx={{ color: palette.dark.text.secondary }}
-                >
+                <Typography variant="body2" sx={{ color: palette.dark.text.secondary }}>
                   {user?.role}
                 </Typography>
               </Box>
@@ -190,15 +155,12 @@ export default function DashboardSidebar({
             pb: 5,
             mt: 10,
             width: 1,
-            textAlign: "center",
-            bgcolor: "grey.900",
+            textAlign: 'center',
+            bgcolor: 'grey.900'
           }}
         >
           <div>
-            <Typography
-              variant="body2"
-              sx={{ color: palette.dark.text.secondary }}
-            >
+            <Typography variant="body2" sx={{ color: palette.dark.text.secondary }}>
               Need help?
               <br /> Please check our docs
             </Typography>
@@ -215,11 +177,11 @@ export default function DashboardSidebar({
     <RootStyle
       sx={{
         width: {
-          lg: isCollapse ? COLLAPSE_WIDTH : DRAWER_WIDTH,
+          lg: isCollapse ? COLLAPSE_WIDTH : DRAWER_WIDTH
         },
         ...(collapseClick && {
-          position: "absolute",
-        }),
+          position: 'absolute'
+        })
       }}
     >
       <MHidden width="lgUp">
@@ -227,7 +189,7 @@ export default function DashboardSidebar({
           open={isOpenSidebar}
           onClose={onCloseSidebar}
           PaperProps={{
-            sx: { width: DRAWER_WIDTH },
+            sx: { width: DRAWER_WIDTH }
           }}
         >
           {renderContent}
@@ -243,19 +205,18 @@ export default function DashboardSidebar({
           PaperProps={{
             sx: {
               width: DRAWER_WIDTH,
-              bgcolor: "background.default",
+              bgcolor: 'background.default',
               ...(isCollapse && {
-                width: COLLAPSE_WIDTH,
+                width: COLLAPSE_WIDTH
               }),
               ...(collapseHover && {
                 borderRight: 0,
-                backdropFilter: "blur(6px)",
-                WebkitBackdropFilter: "blur(6px)", // Fix on Mobile
+                backdropFilter: 'blur(6px)',
+                WebkitBackdropFilter: 'blur(6px)', // Fix on Mobile
                 boxShadow: (theme) => theme.customShadows.z20,
-                bgcolor: (theme) =>
-                  alpha(theme.palette.background.default, 0.88),
-              }),
-            },
+                bgcolor: (theme) => alpha(theme.palette.background.default, 0.88)
+              })
+            }
           }}
         >
           {renderContent}

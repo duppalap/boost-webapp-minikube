@@ -5,13 +5,13 @@
         "es2021": true
     },
     "plugins": [
+        "import",
         "react",
         "prettier",
         "@typescript-eslint"
     ],
     "extends": [
         "airbnb-typescript",
-        "react-app",
         "prettier"
     ],
     "parser": "@typescript-eslint/parser",
@@ -34,6 +34,7 @@
         "react/jsx-key": 2,
         "no-unused-vars": 0,
         "import/no-cycle": 0,
+        "default-param-last": 0,
         "no-return-assign": 0,
         "react/prop-types": 0,
         "no-param-reassign": 0,

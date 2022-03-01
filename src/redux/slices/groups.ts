@@ -1,4 +1,4 @@
-import { filter, omit, remove } from 'lodash';
+import { filter } from 'lodash';
 import { createSlice } from '@reduxjs/toolkit';
 import { dispatch } from '../store';
 
@@ -59,15 +59,15 @@ const slice = createSlice({
 // ----------------------------------------------------------------------
 
 export function getBoostGroupList(
-  currentRows: number = 0,
-  records: number = 10,
   ownerId: string | null,
-  isSubGroupList: boolean = false
+  isSubGroupList: boolean = false,
+  currentRows: number = 0,
+  records: number = 10
 ) {
   return async () => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await groupService.getGroups(currentRows, records, ownerId, isSubGroupList);
+      const response = await groupService.getGroups(ownerId, currentRows, records, isSubGroupList);
       dispatch(slice.actions.getGroupListSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));

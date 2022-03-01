@@ -1,8 +1,6 @@
-import MuiAccordionSummary, {
-  AccordionSummaryProps,
-} from "@mui/material/AccordionSummary";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import * as React from "react";
+import MuiAccordionSummary, { AccordionSummaryProps } from '@mui/material/AccordionSummary';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import * as React from 'react';
 import {
   Accordion,
   AccordionDetails,
@@ -15,26 +13,23 @@ import {
   Dialog,
   IconButton,
   DialogContent,
-  StyledEngineProvider,
-} from "@mui/material";
-import { useSnackbar } from "notistack";
-import closeFill from "@iconify/icons-eva/close-fill";
-import { Icon } from "@iconify/react";
-import InfoIcon from "@mui/icons-material/Info";
-import CloseIcon from "@mui/icons-material/Close";
-import HistoryIcon from "@mui/icons-material/History";
-import { IBoostAccordianProps } from "../@types/boost";
-import { BoostService } from "../_apis_/boost";
-import { SyntheticEvent } from "react";
-import {
-  BoostHistoricPricingGrid,
-  IPricingModel,
-} from "./grids/BoostHistoricPricingGrid";
-import { MIconButton } from "./@material-extend";
-import CancelIcon from "@mui/icons-material/Cancel";
-import BeenhereIcon from "@mui/icons-material/Beenhere";
-import { AuthService } from "../_apis_/auth";
-import { useLocation } from "react-router-dom";
+  StyledEngineProvider
+} from '@mui/material';
+import { useSnackbar } from 'notistack';
+import closeFill from '@iconify/icons-eva/close-fill';
+import { Icon } from '@iconify/react';
+import InfoIcon from '@mui/icons-material/Info';
+import CloseIcon from '@mui/icons-material/Close';
+import HistoryIcon from '@mui/icons-material/History';
+import { IBoostAccordianProps } from '../@types/boost';
+import { BoostService } from '../_apis_/boost';
+import { SyntheticEvent } from 'react';
+import { BoostHistoricPricingGrid, IPricingModel } from './grids/BoostHistoricPricingGrid';
+import { MIconButton } from './@material-extend';
+import CancelIcon from '@mui/icons-material/Cancel';
+import BeenhereIcon from '@mui/icons-material/Beenhere';
+import { AuthService } from '../_apis_/auth';
+import { useLocation } from 'react-router-dom';
 
 export default function BoostAccordian(props: IBoostAccordianProps) {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -47,16 +42,13 @@ export default function BoostAccordian(props: IBoostAccordianProps) {
   const AccordionSummary = styled((props: AccordionSummaryProps) => (
     <MuiAccordionSummary expandIcon={<ExpandMoreIcon />} {...props} />
   ))(({ theme }) => ({
-    backgroundColor: alpha(
-      theme.palette.primary.main,
-      theme.palette.action.selectedOpacity
-    ),
+    backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.selectedOpacity),
     marginBottom: -1,
-    "&.Mui-expanded": {
+    '&.Mui-expanded': {
       minHeight: 48,
-      maxHeight: 50,
+      maxHeight: 50
     },
-    borderRadius: "8px 8px 0 0",
+    borderRadius: '8px 8px 0 0'
   }));
 
   /**
@@ -73,8 +65,8 @@ export default function BoostAccordian(props: IBoostAccordianProps) {
   async function showPricingHistory(ev: SyntheticEvent) {
     ev.stopPropagation();
     const searchParams: URLSearchParams = new URLSearchParams(search);
-    const ownerId = searchParams ? searchParams.get("ownerId") : "";
-    const boostGroupId = searchParams ? searchParams.get("boostGroupId") : "";
+    const ownerId = searchParams ? searchParams.get('ownerId') : '';
+    const boostGroupId = searchParams ? searchParams.get('boostGroupId') : '';
     if (boostGroupId && ownerId) {
       const info = await boostService.getHistoricPricingModel(
         parseInt(ownerId, 10),
@@ -82,9 +74,7 @@ export default function BoostAccordian(props: IBoostAccordianProps) {
       );
       if (info && info.data && info.data.rows.length > 0) {
         let hData = info.data.rows;
-        hData.sort((a: IPricingModel, b: IPricingModel) =>
-          a.createdAt > b.createdAt ? 1 : -1
-        );
+        hData.sort((a: IPricingModel, b: IPricingModel) => (a.createdAt > b.createdAt ? 1 : -1));
         hData.forEach((data: IPricingModel) => {
           data.createdAt = setFormatDate(data.createdAt);
           data.updatedAt = setFormatDate(data.updatedAt);
@@ -101,14 +91,14 @@ export default function BoostAccordian(props: IBoostAccordianProps) {
   }
 
   function noHistoricSnackBar() {
-    enqueueSnackbar("No Historic Pricing", {
-      variant: "warning",
+    enqueueSnackbar('No Historic Pricing', {
+      variant: 'warning',
       action: (key) => (
         <MIconButton size="small" onClick={() => closeSnackbar(key)}>
           <Icon icon={closeFill} />
         </MIconButton>
       ),
-      autoHideDuration: 3000,
+      autoHideDuration: 3000
     });
   }
 
@@ -119,25 +109,19 @@ export default function BoostAccordian(props: IBoostAccordianProps) {
   function setFormatDate(dateItem: Date | string): string {
     dateItem = new Date(dateItem);
     return (
-      [
-        dateItem.getMonth() + 1,
-        dateItem.getDate(),
-        dateItem.getFullYear(),
-      ].join("/") +
-      " " +
-      [dateItem.getHours(), dateItem.getMinutes(), dateItem.getSeconds()].join(
-        ":"
-      )
+      [dateItem.getMonth() + 1, dateItem.getDate(), dateItem.getFullYear()].join('/') +
+      ' ' +
+      [dateItem.getHours(), dateItem.getMinutes(), dateItem.getSeconds()].join(':')
     );
   }
 
   const MuiDialog = styled(Dialog)(({ theme }) => ({
-    "& .MuiDialogContent-root": {
-      padding: theme.spacing(2),
+    '& .MuiDialogContent-root': {
+      padding: theme.spacing(2)
     },
-    "& .MuiDialogActions-root": {
-      padding: theme.spacing(1),
-    },
+    '& .MuiDialogActions-root': {
+      padding: theme.spacing(1)
+    }
   }));
 
   interface DialogTitleProps {
@@ -156,10 +140,10 @@ export default function BoostAccordian(props: IBoostAccordianProps) {
             aria-label="close"
             onClick={onClose}
             sx={{
-              position: "absolute",
+              position: 'absolute',
               right: 8,
               top: 8,
-              color: (theme) => theme.palette.grey[500],
+              color: (theme) => theme.palette.grey[500]
             }}
           >
             <CloseIcon />
@@ -170,26 +154,19 @@ export default function BoostAccordian(props: IBoostAccordianProps) {
   };
 
   return (
-    <Accordion
-      key={`accordian_${title}`}
-      sx={{ boxShadow: theme.shadows[3] }}
-      {...props}
-    >
+    <Accordion key={`accordian_${title}`} sx={{ boxShadow: theme.shadows[3] }} {...props}>
       <AccordionSummary key={`accordian_summary_${title}`}>
         {icon}
         <Typography
           variant="subtitle1"
           sx={{
-            ...(icon && { pl: 1.5 }),
+            ...(icon && { pl: 1.5 })
           }}
         >
           {title}
         </Typography>
         {info && (
-          <Typography sx={{ color: "text.secondary", marginLeft: 1 }}>
-            {" "}
-            {`(${info})`}{" "}
-          </Typography>
+          <Typography sx={{ color: 'text.secondary', marginLeft: 1 }}> {`(${info})`} </Typography>
         )}
         {help && (
           <Tooltip title={`${help}`}>
@@ -198,24 +175,18 @@ export default function BoostAccordian(props: IBoostAccordianProps) {
         )}
         {pricingHistory && (
           <Tooltip title={`${pricingHistory}`}>
-            <HistoryIcon
-              onClick={(ev) => showPricingHistory(ev)}
-              sx={{ marginLeft: 1 }}
-            />
+            <HistoryIcon onClick={(ev) => showPricingHistory(ev)} sx={{ marginLeft: 1 }} />
           </Tooltip>
         )}
         <MuiDialog
           onClose={() => setOpen(!open)}
           keepMounted
-          maxWidth={"xl"}
+          maxWidth={'xl'}
           fullWidth={true}
           MuiDialogTitlearia-labelledby="customized-dialog-title"
           open={open}
         >
-          <MuiDialogTitle
-            id="customized-dialog-title"
-            onClose={() => setOpen(!open)}
-          >
+          <MuiDialogTitle id="customized-dialog-title" onClose={() => setOpen(!open)}>
             Historic Pricing
           </MuiDialogTitle>
           <DialogContent dividers>
@@ -228,10 +199,10 @@ export default function BoostAccordian(props: IBoostAccordianProps) {
         </MuiDialog>
         <Typography
           sx={{
-            fontStyle: "italic",
+            fontStyle: 'italic',
             fontSize: 12,
             marginTop: 0.5,
-            marginLeft: 1,
+            marginLeft: 1
           }}
         >
           {subtitle}

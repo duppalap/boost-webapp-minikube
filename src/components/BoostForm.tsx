@@ -10,18 +10,18 @@ import {
   Typography,
   useTheme,
   Container,
-  Card,
-} from "@mui/material";
-import { Form, FormikProvider, getIn, useFormik } from "formik";
-import { useNavigate } from "react-router";
-import { LoadingButton } from "@mui/lab";
-import React, { Fragment, useEffect, useState } from "react";
-import { useSnackbar } from "notistack";
-import { BoostService } from "../_apis_/boost";
-import { get } from "lodash";
-import BoostAccordian from "./BoostAccordian";
-import useSettings from "../hooks/useSettings";
-import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
+  Card
+} from '@mui/material';
+import { Form, FormikProvider, getIn, useFormik } from 'formik';
+import { useNavigate } from 'react-router';
+import { LoadingButton } from '@mui/lab';
+import React, { Fragment, useEffect, useState } from 'react';
+import { useSnackbar } from 'notistack';
+import { BoostService } from '../_apis_/boost';
+import { get } from 'lodash';
+import BoostAccordian from './BoostAccordian';
+import useSettings from '../hooks/useSettings';
+import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 
 export interface ISelectOption {
   key: string | number;
@@ -63,7 +63,7 @@ export interface FormProps {
   accordians?: IFormAccordian[];
   initialValues: any;
   additionalValues?: {};
-  apiMethod: "POST" | "PUT";
+  apiMethod: 'POST' | 'PUT';
   apiUrl: string;
   formTouched?: boolean;
   successMessage: string;
@@ -98,16 +98,15 @@ function BoostForm({
   enableCancel,
   cancelAction = () => {},
   onSuccessAction = (data?: any) => {},
-  cardLayout = true,
+  cardLayout = true
 }: FormProps) {
   const navigate = useNavigate();
   const [boostFormTouched, setBoostFormTouched] = useState<boolean>(false);
   const [expanded, setExpanded] = useState<string | false>(`panel0`);
 
-  const handleChange =
-    (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
-      setExpanded(isExpanded ? panel : false);
-    };
+  const handleChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+    setExpanded(isExpanded ? panel : false);
+  };
 
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const boostService = new BoostService();
@@ -118,14 +117,9 @@ function BoostForm({
     setBoostFormTouched(formTouched);
   }, [formTouched]);
 
-  const changeSwitchValues = (
-    fields: IFormField[] | undefined,
-    values: any
-  ) => {
+  const changeSwitchValues = (fields: IFormField[] | undefined, values: any) => {
     fields
-      ?.filter(
-        (item: IFormField) => item.switch && item.switchValueType === "number"
-      )
+      ?.filter((item: IFormField) => item.switch && item.switchValueType === 'number')
       .forEach((element) => {
         values[element.name] = values[element.name] === true ? 1 : 0;
       });
@@ -141,21 +135,21 @@ function BoostForm({
       (response) => {
         if (response && response.status === 200) {
           enqueueSnackbar(successMessage, {
-            variant: "success",
+            variant: 'success',
             anchorOrigin: { horizontal: `center`, vertical: `top` },
             autoHideDuration: 6000,
-            action,
+            action
           });
           cancelAction();
           onSuccessAction(response);
         }
       },
       (err) => {
-        enqueueSnackbar("Error Creating the form", {
-          variant: "error",
+        enqueueSnackbar('Error Creating the form', {
+          variant: 'error',
           anchorOrigin: { horizontal: `center`, vertical: `top` },
           autoHideDuration: 6000,
-          action,
+          action
         });
       }
       // I repeat the enqueueSnackbar data because of the variant creates a lint error.
@@ -173,7 +167,7 @@ function BoostForm({
         const body = model
           ? {
               [model]: allValues,
-              ...(additionalBody && additionalBody),
+              ...(additionalBody && additionalBody)
             }
           : allValues;
         submitAction ? submitAction(allValues) : formSubmitAction(body);
@@ -183,7 +177,7 @@ function BoostForm({
         setSubmitting(false);
         setErrors(error);
       }
-    },
+    }
   });
 
   const {
@@ -194,7 +188,7 @@ function BoostForm({
     isSubmitting,
     getFieldProps,
     setFieldValue,
-    resetForm,
+    resetForm
   } = formik;
 
   const getField = (item: IFormField) => {
@@ -216,7 +210,7 @@ function BoostForm({
             />
           }
           label={
-            <Typography variant="body2" sx={{ color: "text.secondary" }}>
+            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
               {item.label}
             </Typography>
           }
@@ -253,10 +247,7 @@ function BoostForm({
       <Grid item xs={12}>
         <Stack sx={{ p: 3 }} spacing={3}>
           {fields?.map((item) => {
-            return (
-              !item.hidden &&
-              (item.type === "table" ? item.table : getField(item))
-            );
+            return !item.hidden && (item.type === 'table' ? item.table : getField(item));
           })}
           {additionalFields?.map((item) => {
             return item;
@@ -275,7 +266,7 @@ function BoostForm({
     return (
       heading && (
         <Box sx={{ mb: 5, mt: 5 }}>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Box sx={{ flexGrow: 1 }}>
               <Typography variant="h4">{heading}</Typography>
             </Box>
@@ -315,10 +306,10 @@ function BoostForm({
               <Box
                 sx={{
                   mt: 3,
-                  display: "flex",
-                  justifyContent: "center",
-                  flexWrap: "wrap",
-                  "& > *": { m: "8px !important" },
+                  display: 'flex',
+                  justifyContent: 'center',
+                  flexWrap: 'wrap',
+                  '& > *': { m: '8px !important' }
                 }}
               >
                 <LoadingButton
@@ -327,14 +318,12 @@ function BoostForm({
                   variant="contained"
                   loading={isSubmitting}
                 >
-                  {!isEdit ? "Create" : "Save"}
+                  {!isEdit ? 'Create' : 'Save'}
                 </LoadingButton>
                 {enableCancel && (
                   <Button
                     variant="contained"
-                    onClick={() =>
-                      cancelAction ? cancelAction() : resetBoostForm()
-                    }
+                    onClick={() => (cancelAction ? cancelAction() : resetBoostForm())}
                   >
                     Cancel
                   </Button>
@@ -348,7 +337,7 @@ function BoostForm({
   };
 
   return (
-    <Container maxWidth={themeStretch ? false : "lg"}>
+    <Container maxWidth={themeStretch ? false : 'lg'}>
       {cardLayout ? <Card sx={{ p: 3 }}>{getForm()}</Card> : getForm()}
     </Container>
   );

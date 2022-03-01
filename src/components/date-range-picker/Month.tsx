@@ -1,43 +1,37 @@
-import * as React from "react";
-import { Paper, Grid, Typography, makeStyles } from "@material-ui/core";
-import {
-  getDate,
-  isSameMonth,
-  isToday,
-  format,
-  isWithinInterval,
-} from "date-fns";
+import * as React from 'react';
+import { Paper, Grid, Typography, makeStyles } from '@material-ui/core';
+import { getDate, isSameMonth, isToday, format, isWithinInterval } from 'date-fns';
 import {
   chunks,
   getDaysInMonth,
   isStartOfRange,
   isEndOfRange,
   inDateRange,
-  isRangeSameDay,
-} from "../../utils/datePicker";
-import Header from "./Header";
-import Day from "./Day";
+  isRangeSameDay
+} from '../../utils/datePicker';
+import Header from './Header';
+import Day from './Day';
 
 // eslint-disable-next-line no-unused-vars
-import { NavigationAction, DateRange } from "../../@types/datePicker";
+import { NavigationAction, DateRange } from '../../@types/datePicker';
 
-const WEEK_DAYS = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+const WEEK_DAYS = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
 const useStyles = makeStyles(() => ({
   root: {
-    width: 290,
+    width: 290
   },
   weekDaysContainer: {
     marginTop: 10,
     paddingLeft: 30,
-    paddingRight: 30,
+    paddingRight: 30
   },
   daysContainer: {
     paddingLeft: 15,
     paddingRight: 15,
     marginTop: 15,
-    marginBottom: 20,
-  },
+    marginBottom: 20
+  }
 }));
 
 interface MonthProps {
@@ -69,7 +63,7 @@ const Month: React.FunctionComponent<MonthProps> = (props: MonthProps) => {
     marker,
     setValue: setDate,
     minDate,
-    maxDate,
+    maxDate
   } = props;
 
   // eslint-disable-next-line react/destructuring-assignment
@@ -83,12 +77,8 @@ const Month: React.FunctionComponent<MonthProps> = (props: MonthProps) => {
           setDate={setDate}
           nextDisabled={!forward}
           prevDisabled={!back}
-          onClickPrevious={() =>
-            handlers.onMonthNavigate(marker, NavigationAction.Previous)
-          }
-          onClickNext={() =>
-            handlers.onMonthNavigate(marker, NavigationAction.Next)
-          }
+          onClickPrevious={() => handlers.onMonthNavigate(marker, NavigationAction.Previous)}
+          onClickNext={() => handlers.onMonthNavigate(marker, NavigationAction.Next)}
         />
 
         <Grid
@@ -119,12 +109,11 @@ const Month: React.FunctionComponent<MonthProps> = (props: MonthProps) => {
                 const isStart = isStartOfRange(dateRange, day);
                 const isEnd = isEndOfRange(dateRange, day);
                 const isRangeOneDay = isRangeSameDay(dateRange);
-                const highlighted =
-                  inDateRange(dateRange, day) || helpers.inHoverRange(day);
+                const highlighted = inDateRange(dateRange, day) || helpers.inHoverRange(day);
 
                 return (
                   <Day
-                    key={format(day, "MM-dd-yyyy")}
+                    key={format(day, 'MM-dd-yyyy')}
                     filled={isStart || isEnd}
                     outlined={isToday(day)}
                     highlighted={highlighted && !isRangeOneDay}

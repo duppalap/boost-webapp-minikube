@@ -1,9 +1,9 @@
-import { useState, ReactNode } from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import { useState, ReactNode } from 'react';
+import { Navigate, useLocation } from 'react-router-dom';
 // hooks
-import useAuth from "../hooks/useAuth";
+import useAuth from '../hooks/useAuth';
 // pages
-import Login from "../pages/authentication/Login";
+import Login from '../pages/authentication/Login';
 
 // ----------------------------------------------------------------------
 
@@ -14,9 +14,7 @@ type AuthGuardProps = {
 export default function AuthGuard({ children }: AuthGuardProps) {
   const { isAuthenticated } = useAuth();
   const { pathname } = useLocation();
-  const [requestedLocation, setRequestedLocation] = useState<string | null>(
-    null
-  );
+  const [requestedLocation, setRequestedLocation] = useState<string | null>(null);
 
   if (!isAuthenticated) {
     if (pathname !== requestedLocation) {

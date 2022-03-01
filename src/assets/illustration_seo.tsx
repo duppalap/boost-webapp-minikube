@@ -1,12 +1,9 @@
 // material
-import { useTheme } from '@mui/material/styles';
 import { Box, BoxProps } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
 export default function SeoIllustration({ ...other }: BoxProps) {
-  const theme = useTheme();
-
   return (
     <Box {...other}>
       <svg

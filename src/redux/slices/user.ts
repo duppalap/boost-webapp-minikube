@@ -1,4 +1,4 @@
-import { map, filter } from 'lodash';
+import { filter } from 'lodash';
 import { createSlice } from '@reduxjs/toolkit';
 import { dispatch } from '../store';
 // utils
@@ -31,6 +31,17 @@ const initialState: UserState = {
 };
 
 const userService = new UserService();
+
+const getUserRole = (userRoleId: any, Owner: any): string => {
+  let userRole: string = userRoleId === 1 ? 'Super Admin' : '';
+  if (Owner) {
+    if (userRoleId === 2) userRole = 'Owner';
+    if (userRoleId === 3) {
+      userRole = 'Client Admin';
+    }
+  }
+  return userRole;
+};
 
 const slice = createSlice({
   name: 'user',
@@ -99,17 +110,6 @@ export default slice.reducer;
 export const { deleteUser } = slice.actions;
 
 // ----------------------------------------------------------------------
-
-const getUserRole = (userRoleId: any, Owner: any): string => {
-  let userRole: string = userRoleId === 1 ? 'Super Admin' : '';
-  if (Owner) {
-    if (userRoleId === 2) userRole = 'Owner';
-    if (userRoleId === 3) {
-      userRole = 'Client Admin';
-    }
-  }
-  return userRole;
-};
 
 export function getUserList(currentRows: number = 0, records: number = 10, ownerId?: number) {
   return async () => {

@@ -1,42 +1,35 @@
-import { Icon } from "@iconify/react";
-import { useSnackbar } from "notistack";
-import { useRef, useState } from "react";
-import homeFill from "@iconify/icons-eva/home-fill";
-import settings2Fill from "@iconify/icons-eva/settings-2-fill";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { Icon } from '@iconify/react';
+import { useSnackbar } from 'notistack';
+import { useRef, useState } from 'react';
+import homeFill from '@iconify/icons-eva/home-fill';
+import settings2Fill from '@iconify/icons-eva/settings-2-fill';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 // material
-import { alpha } from "@mui/material/styles";
-import {
-  Button,
-  Box,
-  Divider,
-  MenuItem,
-  Typography,
-  Tooltip,
-} from "@mui/material";
+import { alpha } from '@mui/material/styles';
+import { Button, Box, Divider, MenuItem, Typography, Tooltip } from '@mui/material';
 // routes
-import { PATH_DASHBOARD } from "../../routes/paths";
+import { PATH_DASHBOARD } from '../../routes/paths';
 // hooks
-import useAuth from "../../hooks/useAuth";
-import useIsMountedRef from "../../hooks/useIsMountedRef";
+import useAuth from '../../hooks/useAuth';
+import useIsMountedRef from '../../hooks/useIsMountedRef';
 // components
-import { MIconButton } from "../../components/@material-extend";
-import MyAvatar from "../../components/MyAvatar";
-import MenuPopover from "../../components/MenuPopover";
+import { MIconButton } from '../../components/@material-extend';
+import MyAvatar from '../../components/MyAvatar';
+import MenuPopover from '../../components/MenuPopover';
 
 // ----------------------------------------------------------------------
 
 const MENU_OPTIONS = [
   {
-    label: "Home",
+    label: 'Home',
     icon: homeFill,
-    linkTo: "/",
+    linkTo: '/'
   },
   {
-    label: "Settings",
+    label: 'Settings',
     icon: settings2Fill,
-    linkTo: PATH_DASHBOARD.user.account,
-  },
+    linkTo: PATH_DASHBOARD.user.account
+  }
 ];
 
 // ----------------------------------------------------------------------
@@ -60,12 +53,12 @@ export default function AccountPopover() {
     try {
       await logout?.();
       if (isMountedRef.current) {
-        navigate("/");
+        navigate('/');
         handleClose();
       }
     } catch (error) {
       console.error(error);
-      enqueueSnackbar("Unable to logout", { variant: "error" });
+      enqueueSnackbar('Unable to logout', { variant: 'error' });
     }
   };
 
@@ -79,16 +72,16 @@ export default function AccountPopover() {
           width: 44,
           height: 44,
           ...(open && {
-            "&:before": {
+            '&:before': {
               zIndex: 1,
               content: "''",
-              width: "100%",
-              height: "100%",
-              borderRadius: "50%",
-              position: "absolute",
-              bgcolor: (theme) => alpha(theme.palette.grey[900], 0.72),
-            },
-          }),
+              width: '100%',
+              height: '100%',
+              borderRadius: '50%',
+              position: 'absolute',
+              bgcolor: (theme) => alpha(theme.palette.grey[900], 0.72)
+            }
+          })
         }}
       >
         <MyAvatar />
@@ -101,16 +94,13 @@ export default function AccountPopover() {
         sx={{ width: 220 }}
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
-          <Tooltip
-            title={`${user?.firstName} ${user?.lastName}`}
-            placement="top"
-          >
+          <Tooltip title={`${user?.firstName} ${user?.lastName}`} placement="top">
             <Typography variant="subtitle1" noWrap>
               {`${user?.firstName} ${user?.lastName}`}
             </Typography>
           </Tooltip>
           <Tooltip title={`${user?.email}`} placement="top">
-            <Typography variant="body2" sx={{ color: "text.secondary" }} noWrap>
+            <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
               {user?.email}
             </Typography>
           </Tooltip>
@@ -124,7 +114,7 @@ export default function AccountPopover() {
             to={option.linkTo}
             component={RouterLink}
             onClick={handleClose}
-            sx={{ typography: "body2", py: 1, px: 2.5 }}
+            sx={{ typography: 'body2', py: 1, px: 2.5 }}
           >
             <Box
               component={Icon}
@@ -132,7 +122,7 @@ export default function AccountPopover() {
               sx={{
                 mr: 2,
                 width: 24,
-                height: 24,
+                height: 24
               }}
             />
 
@@ -141,12 +131,7 @@ export default function AccountPopover() {
         ))}
 
         <Box sx={{ p: 2, pt: 1.5 }}>
-          <Button
-            fullWidth
-            color="inherit"
-            variant="outlined"
-            onClick={handleLogout}
-          >
+          <Button fullWidth color="inherit" variant="outlined" onClick={handleLogout}>
             Logout
           </Button>
         </Box>

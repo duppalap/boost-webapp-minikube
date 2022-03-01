@@ -54,15 +54,15 @@ const reportSlice = createSlice({
 // ----------------------------------------------------------------------
 
 export function getReportList(
-  currentRows: number = 0,
-  records: number = 10,
   ownerId: string | null,
-  boostGroupId: number | undefined
+  boostGroupId: number | undefined,
+  currentRows: number = 0,
+  records: number = 10
 ) {
   return async () => {
     dispatch(reportSlice.actions.startLoading());
     try {
-      let boostGroupIds = [];
+      let boostGroupIds: number[] = [];
       if (boostGroupId) {
         boostGroupIds.push(boostGroupId);
       }

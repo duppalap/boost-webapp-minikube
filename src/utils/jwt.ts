@@ -7,6 +7,10 @@ import { LoginForm } from './sigin';
 
 // ----------------------------------------------------------------------
 
+const decode = (accessToken: string): LoginForm => {
+  return jwtDecode(accessToken);
+};
+
 const isValidToken = (accessToken: string) => {
   if (!accessToken) {
     return false;
@@ -14,10 +18,6 @@ const isValidToken = (accessToken: string) => {
   const expirationDate = decode(accessToken)?.expirationDate;
   const currentTime = Date.now() / 1000;
   return expirationDate ? expirationDate > currentTime : false;
-};
-
-const decode = (accessToken: string): LoginForm => {
-  return jwtDecode(accessToken);
 };
 
 const handleTokenExpired = (exp: any) => {
@@ -31,6 +31,45 @@ const handleTokenExpired = (exp: any) => {
     // You can do what ever you want here, like show a notification
   }, timeLeft);
 };
+
+// Token Section
+
+function setCookie(tokenData: string) {
+  let cookieString: string =
+    encodeURIComponent('boostAmpReactToken') + '=' + encodeURIComponent(tokenData) + ';';
+  // eslint-disable-next-line no-useless-concat
+  cookieString += 'samesite=' + 'Strict' + ';';
+  document.cookie = cookieString;
+}
+
+/**
+ * Used for get the token cookie with RegExp.
+ * @param name Cookie name
+ */
+function getCookieRegExp(name: string): RegExp {
+  // eslint-disable-next-line no-useless-escape
+  const escapedName: string = name.replace(/([\[\]\{\}\(\)\|\=\;\+\?\,\.\*\^\$])/gi, '\\$1');
+
+  return new RegExp('(?:^' + escapedName + '|;\\s*' + escapedName + ')=(.*?)(?:;|$)', 'g');
+}
+
+function getTokenCookie() {
+  const name = encodeURIComponent('boostAmpReactToken');
+  let result;
+  const regExp: RegExp = getCookieRegExp(name);
+  result = regExp.exec(document.cookie);
+  if (result && result?.length > 0) {
+    return result[1];
+  }
+  return false;
+}
+
+/**
+ * Delete the cookie when we logout from the application.
+ */
+function deleteCookie() {
+  document.cookie = 'boostAmpReactToken' + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+}
 
 const setSession = (accessToken: string | null) => {
   if (accessToken) {
@@ -50,38 +89,6 @@ const setSession = (accessToken: string | null) => {
   }
 };
 
-// Token Section
-
-function setCookie(tokenData: string) {
-  let cookieString: string =
-    encodeURIComponent('boostAmpReactToken') + '=' + encodeURIComponent(tokenData) + ';';
-  // eslint-disable-next-line no-useless-concat
-  cookieString += 'samesite=' + 'Strict' + ';';
-  document.cookie = cookieString;
-}
-
-function getTokenCookie() {
-  const name = encodeURIComponent('boostAmpReactToken');
-  let result;
-  const regExp: RegExp = getCookieRegExp(name);
-  result = regExp.exec(document.cookie);
-  if (result && result?.length > 0) {
-    return result[1];
-  }
-  return false;
-}
-
-/**
- * Used for get the token cookie with RegExp.
- * @param name Cookie name
- */
-function getCookieRegExp(name: string): RegExp {
-  // eslint-disable-next-line no-useless-escape
-  const escapedName: string = name.replace(/([\[\]\{\}\(\)\|\=\;\+\?\,\.\*\^\$])/gi, '\\$1');
-
-  return new RegExp('(?:^' + escapedName + '|;\\s*' + escapedName + ')=(.*?)(?:;|$)', 'g');
-}
-
 /**
  * Validates if a token exist in the cookies.
  * @param name          Cookie name
@@ -92,13 +99,6 @@ function validateToken(): boolean {
     return true;
   }
   return false;
-}
-
-/**
- * Delete the cookie when we logout from the application.
- */
-function deleteCookie() {
-  document.cookie = 'boostAmpReactToken' + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
 
 export {

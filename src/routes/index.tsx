@@ -1,21 +1,20 @@
-import { Suspense, lazy } from "react";
-import { Navigate, useRoutes, useLocation } from "react-router-dom";
+import { Suspense, lazy } from 'react';
+import { Navigate, useRoutes, useLocation } from 'react-router-dom';
 // layouts
 
-import DashboardLayout from "../layouts/dashboard";
+import DashboardLayout from '../layouts/dashboard';
 
 // guards
-import GuestGuard from "../guards/GuestGuard";
-import AuthGuard from "../guards/AuthGuard";
+import GuestGuard from '../guards/GuestGuard';
+import AuthGuard from '../guards/AuthGuard';
 // import RoleBasedGuard from '../guards/RoleBasedGuard';
 // components
-import LoadingScreen from "../components/LoadingScreen";
-import { ROOTS_DASHBOARD } from "./paths";
+import LoadingScreen from '../components/LoadingScreen';
+import { ROOTS_DASHBOARD } from './paths';
 
 // ----------------------------------------------------------------------
 
 const Loadable = (Component: React.ElementType) => (props: any) => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const { pathname } = useLocation();
   const isDashboard = pathname.includes(ROOTS_DASHBOARD);
 
@@ -29,8 +28,8 @@ const Loadable = (Component: React.ElementType) => (props: any) => {
               left: 0,
               width: 1,
               zIndex: 9999,
-              position: "fixed",
-            }),
+              position: 'fixed'
+            })
           }}
         />
       }
@@ -40,32 +39,43 @@ const Loadable = (Component: React.ElementType) => (props: any) => {
   );
 };
 
+// IMPORT COMPONENTS
+
+// Authentication
+const Login = Loadable(lazy(() => import('../pages/authentication/Login')));
+const Register = Loadable(lazy(() => import('../pages/authentication/Register')));
+const ResetPassword = Loadable(lazy(() => import('../pages/authentication/ResetPassword')));
+const VerifyCode = Loadable(lazy(() => import('../pages/authentication/VerifyCode')));
+
+const ComingSoon = Loadable(lazy(() => import('../pages/ComingSoon')));
+const Page500 = Loadable(lazy(() => import('../pages/Page500')));
+
 export default function Router() {
   return useRoutes([
     {
-      path: "auth",
+      path: 'auth',
       children: [
         {
-          path: "login",
+          path: 'login',
           element: (
             <GuestGuard>
               <Login />
             </GuestGuard>
-          ),
+          )
         },
         {
-          path: "register",
+          path: 'register',
           element: (
             <GuestGuard>
               <Register />
             </GuestGuard>
-          ),
+          )
         },
-        { path: "login-unprotected", element: <Login /> },
-        { path: "register-unprotected", element: <Register /> },
-        { path: "reset-password", element: <ResetPassword /> },
-        { path: "verify", element: <VerifyCode /> },
-      ],
+        { path: 'login-unprotected', element: <Login /> },
+        { path: 'register-unprotected', element: <Register /> },
+        { path: 'reset-password', element: <ResetPassword /> },
+        { path: 'verify', element: <VerifyCode /> }
+      ]
     },
 
     // Dashboard Routes
@@ -78,37 +88,20 @@ export default function Router() {
       ),
       children: [
         {
-          element: <Navigate to={`${ROOTS_DASHBOARD}/app`} replace />,
+          element: <Navigate to={`${ROOTS_DASHBOARD}/app`} replace />
         },
         // Main Routes
         {
-          path: "*",
+          path: '*',
           children: [
-            { path: "coming-soon", element: <ComingSoon /> },
-            { path: "500", element: <Page500 /> },
-            { path: "404", element: <ComingSoon /> },
-            { path: "*", element: <Navigate to="/404" replace /> },
-          ],
-        },
-      ],
+            { path: 'coming-soon', element: <ComingSoon /> },
+            { path: '500', element: <Page500 /> },
+            { path: '404', element: <ComingSoon /> },
+            { path: '*', element: <Navigate to="/404" replace /> }
+          ]
+        }
+      ]
     },
-    { path: "*", element: <Navigate to="/404" replace /> },
+    { path: '*', element: <Navigate to="/404" replace /> }
   ]);
 }
-
-// IMPORT COMPONENTS
-
-// Authentication
-const Login = Loadable(lazy(() => import("../pages/authentication/Login")));
-const Register = Loadable(
-  lazy(() => import("../pages/authentication/Register"))
-);
-const ResetPassword = Loadable(
-  lazy(() => import("../pages/authentication/ResetPassword"))
-);
-const VerifyCode = Loadable(
-  lazy(() => import("../pages/authentication/VerifyCode"))
-);
-
-const ComingSoon = Loadable(lazy(() => import("../pages/ComingSoon")));
-const Page500 = Loadable(lazy(() => import("../pages/Page500")));

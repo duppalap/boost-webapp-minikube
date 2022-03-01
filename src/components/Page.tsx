@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
-import { useLocation } from 'react-router-dom';
-import { forwardRef, useEffect, useCallback, ReactNode } from 'react';
+
+import { forwardRef, ReactNode } from 'react';
 // material
 import { Box, BoxProps } from '@mui/material';
 

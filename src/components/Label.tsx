@@ -1,21 +1,14 @@
 // material
-import { alpha, Theme, useTheme, styled } from "@mui/material/styles";
-import { BoxProps } from "@mui/material";
+import { alpha, Theme, useTheme, styled } from '@mui/material/styles';
+import { BoxProps } from '@mui/material';
 // @types
-import { ColorSchema } from "../@types/theme";
+import { ColorSchema } from '../@types/theme';
 
 // ----------------------------------------------------------------------
 
-type LabelColor =
-  | "default"
-  | "primary"
-  | "secondary"
-  | "info"
-  | "success"
-  | "warning"
-  | "error";
+type LabelColor = 'default' | 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error';
 
-type LabelVariant = "filled" | "outlined" | "ghost";
+type LabelVariant = 'filled' | 'outlined' | 'ghost';
 
 interface OwnerState {
   color: LabelColor;
@@ -25,10 +18,10 @@ interface OwnerState {
 interface RootStyleProps {
   ownerState: OwnerState;
 }
-const RootStyle = styled("span")<RootStyleProps>(
+const RootStyle = styled('span')<RootStyleProps>(
   ({
     theme,
-    ownerState,
+    ownerState
   }: {
     theme: Theme;
     ownerState: {
@@ -36,23 +29,23 @@ const RootStyle = styled("span")<RootStyleProps>(
       variant: LabelVariant;
     };
   }) => {
-    const isLight = theme.palette.mode === "light";
+    const isLight = theme.palette.mode === 'light';
     const { color, variant } = ownerState;
 
     const styleFilled = (color: ColorSchema) => ({
       color: theme.palette[color].contrastText,
-      backgroundColor: theme.palette[color].main,
+      backgroundColor: theme.palette[color].main
     });
 
     const styleOutlined = (color: ColorSchema) => ({
       color: theme.palette[color].main,
-      backgroundColor: "transparent",
-      border: `1px solid ${theme.palette[color].main}`,
+      backgroundColor: 'transparent',
+      border: `1px solid ${theme.palette[color].main}`
     });
 
     const styleGhost = (color: ColorSchema) => ({
-      color: theme.palette[color][isLight ? "dark" : "light"],
-      backgroundColor: alpha(theme.palette[color].main, 0.16),
+      color: theme.palette[color][isLight ? 'dark' : 'light'],
+      backgroundColor: alpha(theme.palette[color].main, 0.16)
     });
 
     return {
@@ -60,11 +53,11 @@ const RootStyle = styled("span")<RootStyleProps>(
       minWidth: 22,
       lineHeight: 0,
       borderRadius: 8,
-      cursor: "default",
-      alignItems: "center",
-      whiteSpace: "nowrap",
-      display: "inline-flex",
-      justifyContent: "center",
+      cursor: 'default',
+      alignItems: 'center',
+      whiteSpace: 'nowrap',
+      display: 'inline-flex',
+      justifyContent: 'center',
       padding: theme.spacing(0, 1),
       color: theme.palette.grey[800],
       fontSize: theme.typography.pxToRem(12),
@@ -72,25 +65,23 @@ const RootStyle = styled("span")<RootStyleProps>(
       backgroundColor: theme.palette.grey[300],
       fontWeight: theme.typography.fontWeightBold,
 
-      ...(color !== "default"
+      ...(color !== 'default'
         ? {
-            ...(variant === "filled" && { ...styleFilled(color) }),
-            ...(variant === "outlined" && { ...styleOutlined(color) }),
-            ...(variant === "ghost" && { ...styleGhost(color) }),
+            ...(variant === 'filled' && { ...styleFilled(color) }),
+            ...(variant === 'outlined' && { ...styleOutlined(color) }),
+            ...(variant === 'ghost' && { ...styleGhost(color) })
           }
         : {
-            ...(variant === "outlined" && {
-              backgroundColor: "transparent",
+            ...(variant === 'outlined' && {
+              backgroundColor: 'transparent',
               color: theme.palette.text.primary,
-              border: `1px solid ${theme.palette.grey[500_32]}`,
+              border: `1px solid ${theme.palette.grey[500_32]}`
             }),
-            ...(variant === "ghost" && {
-              color: isLight
-                ? theme.palette.text.secondary
-                : theme.palette.common.white,
-              backgroundColor: theme.palette.grey[500_16],
-            }),
-          }),
+            ...(variant === 'ghost' && {
+              color: isLight ? theme.palette.text.secondary : theme.palette.common.white,
+              backgroundColor: theme.palette.grey[500_16]
+            })
+          })
     };
   }
 );
@@ -102,12 +93,7 @@ interface LabelProps extends BoxProps {
   variant?: LabelVariant;
 }
 
-export default function Label({
-  color = "default",
-  variant = "ghost",
-  children,
-  sx,
-}: LabelProps) {
+export default function Label({ color = 'default', variant = 'ghost', children, sx }: LabelProps) {
   const theme = useTheme();
 
   return (

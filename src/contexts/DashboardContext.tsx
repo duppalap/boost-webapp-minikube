@@ -1,7 +1,7 @@
-import { BoostDeviceInterface } from "../@types/boost";
-import React, { createContext, useState } from "react";
-import { defaultRanges } from "../defaults/datePicker";
-import { DateRange } from "../@types/datePicker";
+import { BoostDeviceInterface } from '../@types/boost';
+import React, { createContext, useState } from 'react';
+import { defaultRanges } from '../defaults/datePicker';
+import { DateRange } from '../@types/datePicker';
 
 interface IDashboardContext {
   selectedBoostDevice?: BoostDeviceInterface;
@@ -19,8 +19,7 @@ interface IDashboardContextProvider {
 }
 
 export const DashboardContextProvider = (props: IDashboardContextProvider) => {
-  let [selectedBoostDevice, setSelectedBoostDevice] =
-    useState<BoostDeviceInterface>();
+  let [selectedBoostDevice, setSelectedBoostDevice] = useState<BoostDeviceInterface>();
 
   let [dateRange, setDateRange] = useState<DateRange>(defaultRanges[1]);
 
@@ -32,7 +31,7 @@ export const DashboardContextProvider = (props: IDashboardContextProvider) => {
     dateRange,
     updateDateRange,
     loadingSummary,
-    setLoadingSummary,
+    setLoadingSummary
   };
 
   function updateSelectedBoostDevice(newState: BoostDeviceInterface) {
@@ -47,9 +46,5 @@ export const DashboardContextProvider = (props: IDashboardContextProvider) => {
     });
   }
 
-  return (
-    <DashboardContext.Provider value={value}>
-      {props.children}
-    </DashboardContext.Provider>
-  );
+  return <DashboardContext.Provider value={value}>{props.children}</DashboardContext.Provider>;
 };

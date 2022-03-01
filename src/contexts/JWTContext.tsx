@@ -1,27 +1,21 @@
-import { createContext, ReactNode, useEffect, useReducer } from "react";
+import { createContext, ReactNode, useEffect, useReducer } from 'react';
 // utils
-import axios from "../utils/axios";
-import {
-  decode,
-  getTokenCookie,
-  setCookie,
-  setSession,
-  validateToken,
-} from "../utils/jwt";
+import axios from '../utils/axios';
+import { decode, getTokenCookie, setCookie, setSession, validateToken } from '../utils/jwt';
 // @types
-import { ActionMap, AuthState, AuthUser, JWTContextType } from "../@types/auth";
-import { AuthService } from "../_apis_/auth";
-import { LoginForm } from "../utils/sigin";
-import { UserService } from "../_apis_/user";
-import { User } from "../@types/user";
+import { ActionMap, AuthState, AuthUser, JWTContextType } from '../@types/auth';
+import { AuthService } from '../_apis_/auth';
+import { LoginForm } from '../utils/sigin';
+import { UserService } from '../_apis_/user';
+import { User } from '../@types/user';
 
 // ----------------------------------------------------------------------
 
 enum Types {
-  Initial = "INITIALIZE",
-  Login = "LOGIN",
-  Logout = "LOGOUT",
-  Register = "REGISTER",
+  Initial = 'INITIALIZE',
+  Login = 'LOGIN',
+  Logout = 'LOGOUT',
+  Register = 'REGISTER'
 }
 
 type JWTAuthPayload = {
@@ -38,41 +32,40 @@ type JWTAuthPayload = {
   };
 };
 
-export type JWTActions =
-  ActionMap<JWTAuthPayload>[keyof ActionMap<JWTAuthPayload>];
+export type JWTActions = ActionMap<JWTAuthPayload>[keyof ActionMap<JWTAuthPayload>];
 
 const initialState: AuthState = {
   isAuthenticated: false,
   isInitialized: false,
-  user: null,
+  user: null
 };
 
 const JWTReducer = (state: AuthState, action: JWTActions) => {
   switch (action.type) {
-    case "INITIALIZE":
+    case 'INITIALIZE':
       return {
         isAuthenticated: action.payload.isAuthenticated,
         isInitialized: true,
-        user: action.payload.user,
+        user: action.payload.user
       };
-    case "LOGIN":
+    case 'LOGIN':
       return {
         ...state,
         isAuthenticated: true,
-        user: action.payload.user,
+        user: action.payload.user
       };
-    case "LOGOUT":
+    case 'LOGOUT':
       return {
         ...state,
         isAuthenticated: false,
-        user: null,
+        user: null
       };
 
-    case "REGISTER":
+    case 'REGISTER':
       return {
         ...state,
         isAuthenticated: true,
-        user: action.payload.user,
+        user: action.payload.user
       };
 
     default:
@@ -97,15 +90,13 @@ function AuthProvider({ children }: { children: ReactNode }) {
           setSession(accessToken);
           const tokenDetails = decode(accessToken);
           if (tokenDetails && tokenDetails.email) {
-            const user: User = JSON.parse(
-              localStorage.getItem("UserInfo") || "{}"
-            );
+            const user: User = JSON.parse(localStorage.getItem('UserInfo') || '{}');
             dispatch({
               type: Types.Initial,
               payload: {
                 isAuthenticated: true,
-                user,
-              },
+                user
+              }
             });
           }
         } else {
@@ -113,8 +104,8 @@ function AuthProvider({ children }: { children: ReactNode }) {
             type: Types.Initial,
             payload: {
               isAuthenticated: false,
-              user: null,
-            },
+              user: null
+            }
           });
         }
       } catch (err) {
@@ -122,8 +113,8 @@ function AuthProvider({ children }: { children: ReactNode }) {
           type: Types.Initial,
           payload: {
             isAuthenticated: false,
-            user: null,
-          },
+            user: null
+          }
         });
       }
     };
@@ -142,37 +133,32 @@ function AuthProvider({ children }: { children: ReactNode }) {
       const user: User = userResponse.data;
       if (user && tokenDetails.role) user.role = tokenDetails.role;
       localStorage.setItem(
-        "UserInfo",
-        JSON.stringify({ ...user, boostGroup: user?.BoostGroup }) || ""
+        'UserInfo',
+        JSON.stringify({ ...user, boostGroup: user?.BoostGroup }) || ''
       );
       dispatch({
         type: Types.Login,
         payload: {
-          user,
-        },
+          user
+        }
       });
     }
   };
 
-  const register = async (
-    email: string,
-    password: string,
-    firstName: string,
-    lastName: string
-  ) => {
-    const response = await axios.post("/api/account/register", {
+  const register = async (email: string, password: string, firstName: string, lastName: string) => {
+    const response = await axios.post('/api/account/register', {
       email,
       password,
       firstName,
-      lastName,
+      lastName
     });
     const { accessToken, user } = response.data;
     setCookie(accessToken);
     dispatch({
       type: Types.Register,
       payload: {
-        user,
-      },
+        user
+      }
     });
   };
 
@@ -189,12 +175,12 @@ function AuthProvider({ children }: { children: ReactNode }) {
     <AuthContext.Provider
       value={{
         ...state,
-        method: "jwt",
+        method: 'jwt',
         login,
         logout,
         register,
         resetPassword,
-        updateProfile,
+        updateProfile
       }}
     >
       {children}

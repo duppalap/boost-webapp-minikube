@@ -55,10 +55,10 @@ const boostSlice = createSlice({
 // ----------------------------------------------------------------------
 
 export function getBoostList(
-  currentRow: number = 0,
-  records: number = 10,
   ownerId: string | null,
   boostGroupId: string | null,
+  currentRow: number = 0,
+  records: number = 10,
   isSubGroup: boolean = false
 ) {
   return async () => {

@@ -54,11 +54,11 @@ const unassignedBoostSlice = createSlice({
 });
 
 export function getUnassignedBoostDeviceList(
-  currentRow: number = 0,
-  records: number = 10,
   ownerId: string | null,
   boostGroupId: string | null,
-  isSubGroup: boolean = false
+  isSubGroup: boolean = false,
+  currentRow: number = 0,
+  records: number = 10
 ) {
   return async () => {
     dispatch(unassignedBoostSlice.actions.startLoading());

@@ -5,9 +5,9 @@ export class BoostGroupService {
   public apiService: WrapperService = new WrapperService();
 
   getGroups(
+    ownerId: string | null,
     currentRows: number = 0,
     records: number = 10,
-    ownerId: string | null,
     isSubGroupList: boolean = false
   ) {
     let apiParam = {

@@ -1,9 +1,9 @@
 // routes
-import { PATH_DASHBOARD } from "../../routes/paths";
+import { PATH_DASHBOARD } from '../../routes/paths';
 // components
 
-import { Icon } from "@iconify/react";
-import SvgIconStyle from "../../components/SvgIconStyle";
+import { Icon } from '@iconify/react';
+import SvgIconStyle from '../../components/SvgIconStyle';
 
 const iconify: string = `iconify`;
 
@@ -14,10 +14,7 @@ const getIcon = (name: string, type?: string, isNavHeader?: boolean) => {
   return type === iconify ? (
     <Icon icon={name} {...props} />
   ) : (
-    <SvgIconStyle
-      src={`/static/icons/navbar/${name}.svg`}
-      sx={{ width: "100%", height: "100%" }}
-    />
+    <SvgIconStyle src={`/static/icons/navbar/${name}.svg`} sx={{ width: '100%', height: '100%' }} />
   );
 };
 
@@ -28,9 +25,9 @@ const ICONS = {
   gridEnergy: getIcon(`ic_grid_energy`, svg, true),
   siteEnergy: getIcon(`ic_site_energy`, svg, false),
   energyTrading: getIcon(`ic_energy_trading`, svg),
-  user: getIcon("heroicons-solid:users", iconify),
-  owner: getIcon("clarity:administrator-solid", iconify),
-  home: getIcon("fa-solid:home", iconify),
+  user: getIcon('heroicons-solid:users', iconify),
+  owner: getIcon('clarity:administrator-solid', iconify),
+  home: getIcon('fa-solid:home', iconify),
   gridEnergySetup: getIcon(`ic_energy_setup`),
   gridEnergyReport: getIcon(`ic_energy_report`),
   siteCapacityManagement: getIcon(`ic_capacity_management`),
@@ -38,127 +35,127 @@ const ICONS = {
   siteReport: getIcon(`ic_site_report`),
   energyTrend: getIcon(`ic_energy_trend`),
   energyPorfolio: getIcon(`ic_energy_portfolio`),
-  company: getIcon("ic:twotone-business", iconify),
+  company: getIcon('ic:twotone-business', iconify),
   boost: getIcon(`ic:round-ev-station`, iconify),
-  gridEnergyProgram: getIcon(`fluent:table-lightning-20-filled`, iconify),
+  gridEnergyProgram: getIcon(`fluent:table-lightning-20-filled`, iconify)
 };
 
 const sidebarConfig = [
   // GENERAL
   // ----------------------------------------------------------------------
   {
-    subheader: "general",
+    subheader: 'general',
     icon: ICONS.general,
     items: [
       {
-        title: "home",
+        title: 'home',
         path: PATH_DASHBOARD.general.app,
-        icon: ICONS.home,
-      },
-    ],
+        icon: ICONS.home
+      }
+    ]
   },
 
   // SYSTEM ADMINISTRATION
   // ----------------------------------------------------------------------
   {
-    subheader: "system administration",
+    subheader: 'system administration',
     icon: ICONS.systemAdmin,
     items: [
       {
-        title: "users",
+        title: 'users',
         path: PATH_DASHBOARD.user.list,
-        icon: ICONS.user,
+        icon: ICONS.user
       },
       {
-        title: "owners",
+        title: 'owners',
         path: PATH_DASHBOARD.user.owners,
-        icon: ICONS.owner,
+        icon: ICONS.owner
       },
       {
-        title: "partners",
+        title: 'partners',
         path: PATH_DASHBOARD.company.list,
-        icon: ICONS.company,
-      },
-    ],
+        icon: ICONS.company
+      }
+    ]
   },
 
   // RESOURCE MANAGEMENT
   // ----------------------------------------------------------------------
   {
-    subheader: "resource management",
+    subheader: 'resource management',
     icon: ICONS.resourceManagement,
     items: [
       {
-        title: "boost devices",
+        title: 'boost devices',
         path: PATH_DASHBOARD.boost.list,
-        icon: ICONS.boost,
-      },
-    ],
+        icon: ICONS.boost
+      }
+    ]
   },
   // Grid Energy
   // ----------------------------------------------------------------------
   {
-    subheader: "grid energy",
+    subheader: 'grid energy',
     icon: ICONS.gridEnergy,
     items: [
       {
-        title: "program management",
+        title: 'program management',
         path: PATH_DASHBOARD.grid.program,
-        icon: ICONS.gridEnergyProgram,
+        icon: ICONS.gridEnergyProgram
       },
       {
-        title: "configuration",
+        title: 'configuration',
         path: PATH_DASHBOARD.grid.configure,
-        icon: ICONS.gridEnergySetup,
+        icon: ICONS.gridEnergySetup
       },
       {
-        title: "reports",
+        title: 'reports',
         path: PATH_DASHBOARD.grid.report,
-        icon: ICONS.gridEnergyReport,
-      },
-    ],
+        icon: ICONS.gridEnergyReport
+      }
+    ]
   },
   // Site Energy
   // ----------------------------------------------------------------------
   {
-    subheader: "site energy",
+    subheader: 'site energy',
     icon: ICONS.siteEnergy,
     items: [
       {
-        title: "capacity management",
+        title: 'capacity management',
         path: PATH_DASHBOARD.site.capacity,
-        icon: ICONS.siteCapacityManagement,
+        icon: ICONS.siteCapacityManagement
       },
       {
-        title: "renewable integration",
+        title: 'renewable integration',
         path: PATH_DASHBOARD.site.renewable,
-        icon: ICONS.siteRenewableIntegration,
+        icon: ICONS.siteRenewableIntegration
       },
       {
-        title: "reports",
+        title: 'reports',
         path: PATH_DASHBOARD.site.report,
-        icon: ICONS.siteReport,
-      },
-    ],
+        icon: ICONS.siteReport
+      }
+    ]
   },
   // Site Energy
   // ----------------------------------------------------------------------
   {
-    subheader: "Energy Trading",
+    subheader: 'Energy Trading',
     icon: ICONS.energyTrading,
     items: [
       {
-        title: "forecast",
+        title: 'forecast',
         path: PATH_DASHBOARD.energy.forecast,
-        icon: ICONS.energyTrend,
+        icon: ICONS.energyTrend
       },
       {
-        title: "portfolio",
+        title: 'portfolio',
         path: PATH_DASHBOARD.energy.portfolio,
-        icon: ICONS.energyPorfolio,
-      },
-    ],
-  },
+        icon: ICONS.energyPorfolio
+      }
+    ]
+  }
 ];
 
 export default sidebarConfig;

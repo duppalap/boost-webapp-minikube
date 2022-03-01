@@ -1,61 +1,53 @@
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink } from 'react-router-dom';
 // material
-import { styled } from "@mui/material/styles";
-import { Box, Card, Link, Container, Typography, Tooltip } from "@mui/material";
-// hooks
-import useAuth from "../../hooks/useAuth";
+import { styled } from '@mui/material/styles';
+import { Box, Card, Link, Container, Typography } from '@mui/material';
+
 // routes
-import { PATH_AUTH } from "../../routes/paths";
+import { PATH_AUTH } from '../../routes/paths';
 // layouts
-import AuthLayout from "../../layouts/AuthLayout";
+import AuthLayout from '../../layouts/AuthLayout';
 // components
-import Page from "../../components/Page";
-import { MHidden } from "../../components/@material-extend";
-import { RegisterForm } from "../../components/authentication/register";
-import RegistrationIllustration from "../../assets/illustration_registration";
+import Page from '../../components/Page';
+import { MHidden } from '../../components/@material-extend';
+import { RegisterForm } from '../../components/authentication/register';
+import RegistrationIllustration from '../../assets/illustration_registration';
 
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Page)(({ theme }) => ({
-  [theme.breakpoints.up("md")]: {
-    display: "flex",
-  },
+  [theme.breakpoints.up('md')]: {
+    display: 'flex'
+  }
 }));
 
 const SectionStyle = styled(Card)(({ theme }) => ({
-  width: "100%",
+  width: '100%',
   maxWidth: 464,
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  margin: theme.spacing(2, 0, 2, 2),
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  margin: theme.spacing(2, 0, 2, 2)
 }));
 
-const ContentStyle = styled("div")(({ theme }) => ({
+const ContentStyle = styled('div')(({ theme }) => ({
   maxWidth: 480,
-  margin: "auto",
-  display: "flex",
-  minHeight: "100vh",
-  flexDirection: "column",
-  justifyContent: "center",
-  padding: theme.spacing(12, 0),
+  margin: 'auto',
+  display: 'flex',
+  minHeight: '100vh',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  padding: theme.spacing(12, 0)
 }));
 
 // ----------------------------------------------------------------------
 
 export default function Register() {
-  const { method } = useAuth();
-
   return (
     <RootStyle title="Register | FreeWire">
       <AuthLayout>
         Already have an account? &nbsp;
-        <Link
-          underline="none"
-          variant="subtitle2"
-          component={RouterLink}
-          to={PATH_AUTH.login}
-        >
+        <Link underline="none" variant="subtitle2" component={RouterLink} to={PATH_AUTH.login}>
           Login
         </Link>
       </AuthLayout>
@@ -71,24 +63,18 @@ export default function Register() {
 
       <Container>
         <ContentStyle>
-          <Box sx={{ mb: 5, display: "flex", alignItems: "center" }}>
+          <Box sx={{ mb: 5, display: 'flex', alignItems: 'center' }}>
             <Box sx={{ flexGrow: 1 }}>
               <Typography variant="h4" gutterBottom>
                 Register in to Freewire
               </Typography>
-              <Typography sx={{ color: "text.secondary" }}>
-                Enter your details below.
-              </Typography>
+              <Typography sx={{ color: 'text.secondary' }}>Enter your details below.</Typography>
             </Box>
           </Box>
 
           <RegisterForm />
 
-          <Typography
-            variant="body2"
-            align="center"
-            sx={{ color: "text.secondary", mt: 3 }}
-          >
+          <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
             By registering, I agree to Freewire&nbsp;
             <Link underline="always" color="text.primary" href="#">
               Terms of Service
@@ -101,7 +87,7 @@ export default function Register() {
           </Typography>
 
           <MHidden width="smUp">
-            <Typography variant="subtitle2" sx={{ mt: 3, textAlign: "center" }}>
+            <Typography variant="subtitle2" sx={{ mt: 3, textAlign: 'center' }}>
               Already have an account?&nbsp;
               <Link to={PATH_AUTH.login} component={RouterLink}>
                 Login
